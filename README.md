@@ -1,7 +1,9 @@
 # Terraform external data source script for SaltStack Pillar.
 
 # Why?
-SaltStack is more than configuration management tool, and in some environment it's [Pillar](https://docs.saltstack.com/en/latest/topics/tutorials/pillar.html) has a lot of data which could be needed somewhere else, e.g. Terraform!
+**SaltStack** is more than configuration management tool, and in some environment it's [Pillar](https://docs.saltstack.com/en/latest/topics/tutorials/pillar.html) has a lot of data which could be needed somewhere else, e.g. Terraform!
+
+
 So this Python script works as external data source and reads from SaltStack Pillar, and returns the value in Terraform as external data source.
 
 # How to use
