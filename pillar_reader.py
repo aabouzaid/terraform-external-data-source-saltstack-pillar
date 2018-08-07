@@ -20,7 +20,7 @@ def pillar_reader():
     The script reads JSON object from stdin, and get `pillar` as a key,
     then get pillar value from SaltStack and prints it on stdout.
 
-    Please note: 
+    Please note:
     This script is meant to run where SaltStack Pillar could be read,
     i.e SaltStack master.
 
@@ -35,16 +35,22 @@ def pillar_reader():
     except ValueError as value_error:
         sys.exit(value_error)
 
-    # Get pillar name.
-    pillar_name = input_dict.get('pillar')
+    # Output dict.
+    output_dict = {}
 
-    # Print output only if JSON payload has 'pillar' as a key.
-    if pillar_name:
+    # Get pillar.
+    for key, value in input_dict.items():
         local = salt.client.Caller()
-        output_dict = local.cmd('pillar.get', pillar_name)
-        output_json = json.dumps(output_dict)
-        sys.stdout.write(output_json)
-    else:
-        sys.exit('[ERROR] Expected JSON payload: \'{"pillar": "path:to:pillar:key"}\'')
+        pillar_value = local.cmd('pillar.get', value)
+
+        # Update final output dict.
+        if isinstance(pillar_value, dict):
+            output_dict.update(pillar_value)
+        else:
+            output_dict.update({key: pillar_value})
+
+    # Print output.
+    output_json = json.dumps(output_dict)
+    sys.stdout.write(output_json)
 
 pillar_reader()
