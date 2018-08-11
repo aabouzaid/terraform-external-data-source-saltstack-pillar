@@ -4,7 +4,14 @@
 # Copyright: (c) 2017, Ahmed AbouZaid <http://aabouzaid.com/>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""Read from SaltStack Pillar, and return the value in Terraform."""
+"""Read from SaltStack Pillar, and return the values in Terraform.
+
+This script is meant to run where SaltStack Pillar could be read,
+i.e SaltStack master.
+
+More info: Terraform External Data Source.
+https://www.terraform.io/docs/providers/external/data_source.html
+"""
 
 import sys
 try:
@@ -17,18 +24,11 @@ import salt.client
 def pillar_reader():
     """Pillar reader
 
-    The script reads JSON object from stdin, and get `pillar` as a key,
-    then get pillar value from SaltStack and prints it on stdout.
-
-    Please note:
-    This script is meant to run where SaltStack Pillar could be read,
-    i.e SaltStack master.
-
-    More info: Terraform External Data Source.
-    https://www.terraform.io/docs/providers/external/data_source.html
+    Reads JSON object from stdin, read all keys, get Pillar values
+    from SaltStack, and prints them on stdout as JSON.
     """
 
-    # Make sure input is a valid JSON.
+    # Make sure the input is a valid JSON.
     input_json = sys.stdin.read()
     try:
         input_dict = json.loads(input_json)
