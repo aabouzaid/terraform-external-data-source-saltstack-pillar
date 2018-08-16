@@ -1,0 +1,5 @@
+*.swp
+*.pyc
+.cache
+.idea
+.coverage
