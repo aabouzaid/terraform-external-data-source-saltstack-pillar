@@ -53,4 +53,5 @@ def pillar_reader():
     output_json = json.dumps(output_dict)
     sys.stdout.write(output_json)
 
-pillar_reader()
+if __name__ == "__main__":
+    pillar_reader()
